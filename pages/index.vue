@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     async guardarNombre() {
-      const response = await this.$axios.post('http://localhost:3000/guardarNombre', {
+      const response = await this.$axios.post('http://localhost:3000/guardar-nombre', {
         nombre: this.nombreForm,
       });
       console.log(response.data);
