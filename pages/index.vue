@@ -10,6 +10,8 @@
 </template>
 
 
+
+
 <script>
 import axios from 'axios';
 
@@ -23,16 +25,18 @@ export default {
   methods: {
     async guardarNombre() {
       try {
-        const response = await axios.post('http://localhost:3000/api/guardarNombre', {
+        axios.post('http://localhost:3000/api/guardarNombre', {
           nombre: this.nombreForm,
+        })
+        .then(() => {
+          this.nombre = this.nombreForm;
+          alert('Inserción exitosa');
+        })
+        .catch((error) => {
+          console.error('Error en la solicitud Axios:', error);
         });
-
-        this.nombre = this.nombreForm;
-        alert('Inserción exitosa');
-        console.log('Respuesta del servidor:', response.data);
-
       } catch (error) {
-        console.error('Error en la solicitud Axios:', error);
+        console.error('Error en la función guardarNombre:', error);
       }
     },
   },

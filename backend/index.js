@@ -50,8 +50,6 @@ handleDisconnect();
 app.use(express.json());
 
 app.post('/api/guardarNombre', (req, res) => {
-  console.log('Petición recibida en /api/guardarNombre');
-  console.log('Datos del cuerpo:', req.body);
   const { nombre } = req.body;
   const sqlInsert = "INSERT INTO nombres (nombre) VALUES (?)";
 
@@ -61,12 +59,18 @@ app.post('/api/guardarNombre', (req, res) => {
       res.status(500).json({ mensaje: 'Error interno del servidor' });
     } else {
       console.log('Registro insertado en la base de datos');
-      console.log('Resultado de la consulta:', result);
-      res.json({ mensaje: `Nombre guardado: ${nombre}` });
+      connection.commit((err) => {
+        if (err) {
+          console.error('Error al hacer commit en la base de datos:', err);
+          res.status(500).json({ mensaje: 'Error interno del servidor' });
+        } else {
+          console.log('Commit exitoso');
+          res.json({ mensaje: `Nombre guardado: ${nombre}` });
+        }
+      });
     }
   });
 });
-
 
 console.log(`La aplicación está escuchando en el puerto: ${port}`);
 
