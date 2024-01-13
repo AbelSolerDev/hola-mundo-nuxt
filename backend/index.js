@@ -7,7 +7,7 @@ const port = 3000;
 
 /*app.use(cors());*/
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:8080',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
